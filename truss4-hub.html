@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRUSS4 Roofing Software | Fine 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- TRUSS4 Specific Styles appended for this page -->
+    <style>
+        /* Badge Override for TRUSS4 */
+        .truss4-badge { background: rgba(245, 158, 11, 0.1); color: var(--truss4-amber); border: 1px solid rgba(245, 158, 11, 0.2); }
+
+        /* 3 Column Grid Override */
+        .solutions-grid.truss4-grid { grid-template-columns: repeat(3, 1fr); max-width: 1000px; margin: 0 auto; }
+
+        /* Timber Truss 3D Mockup CSS */
+        .mockup-canvas.timber-bg { background: linear-gradient(to bottom, #1a1510, #110d0a); align-items: center; justify-content: center; }
+        .truss-frame { position: relative; width: 260px; height: 100px; }
+        
+        /* Timber Chords */
+        .timber-chord { position: absolute; background: linear-gradient(90deg, #b45309, #d97706); border: 1px solid #78350f; border-radius: 2px; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
+        .bottom-chord { bottom: 0; left: 0; width: 100%; height: 12px; }
+        .top-chord { top: 38px; width: 145px; height: 12px; }
+        .top-chord.left { left: -7px; transform: rotate(25deg); }
+        .top-chord.right { right: -7px; transform: rotate(-25deg); }
+        
+        /* Webbing / Posts */
+        .timber-web { position: absolute; background: linear-gradient(90deg, #b45309, #d97706); border: 1px solid #78350f; width: 10px; }
+        .king-post { left: 125px; bottom: 10px; height: 60px; }
+        .diag-web.left { left: 65px; bottom: 10px; height: 45px; transform: rotate(-35deg); }
+        .diag-web.right { right: 65px; bottom: 10px; height: 45px; transform: rotate(35deg); }
+        
+        /* Punched Metal Plates */
+        .metal-plate { position: absolute; background: #94a3b8; border: 1px solid #64748b; border-radius: 2px; box-shadow: inset 0px 0px 5px rgba(255,255,255,0.4); background-image: radial-gradient(#64748b 1px, transparent 1px); background-size: 4px 4px; }
+        .plate-top { top: 8px; left: 115px; width: 30px; height: 25px; }
+        .plate-bot-mid { bottom: 6px; left: 115px; width: 30px; height: 20px; }
+        .plate-bot-left { bottom: 6px; left: 10px; width: 25px; height: 15px; }
+        .plate-bot-right { bottom: 6px; right: 10px; width: 25px; height: 15px; }
+
+        /* Workflow Timeline Section */
+        .timeline-section { padding: 6rem 0; position: relative; max-width: 900px; margin: 0 auto; }
+        .timeline-container { position: relative; padding-left: 3rem; margin-top: 4rem; }
+        
+        /* The Vertical Line */
+        .timeline-line { position: absolute; top: 0; left: 19px; width: 2px; height: 100%; background: linear-gradient(to bottom, var(--truss4-amber), rgba(245, 158, 11, 0.1)); }
+        
+        .timeline-step { position: relative; margin-bottom: 4rem; display: flex; gap: 2rem; align-items: flex-start; opacity: 0; transform: translateY(20px); animation: fadeUp 0.6s forwards ease-out; }
+        .timeline-step:nth-child(2) { animation-delay: 0.1s; }
+        .timeline-step:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-step:nth-child(4) { animation-delay: 0.5s; }
+        .timeline-step:nth-child(5) { animation-delay: 0.7s; }
+
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        
+        /* The Circle Node */
+        .step-indicator { position: absolute; left: -3rem; top: 0; width: 40px; height: 40px; background: var(--bg-base); border: 2px solid var(--truss4-amber); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-weight: bold; color: var(--truss4-amber); z-index: 2; box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); }
+        
+        .step-content { flex: 1; padding: 2rem; }
+        .step-content h3 { color: var(--truss4-amber); font-size: 1.5rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .step-content p { color: var(--text-muted); font-size: 1.05rem; }
+        
+        /* Output badge for Manufacturing step */
+        .cnc-badge { font-size: 0.8rem; background: rgba(255,255,255,0.1); color: var(--text-main); padding: 0.2rem 0.6rem; border-radius: 4px; font-family: var(--font-ui); font-weight: normal; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Global Header (Include your existing Mega-Menu from index.html here) -->
+    
+    <main class="suite-hub" id="truss4-hub">
+        
+        <!-- Suite Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="suite-badge truss4-badge">TRUSS4</div>
+                <h1 style="color: var(--text-main);">TRUSS4 Roofing Software</h1>
+                <p>The complete solution for timber roof trusses connected with punched metal plate fasteners—from 3D modeling directly to manufacturing.</p>
+                <div class="hero-actions">
+                    <button class="btn-primary" style="background: var(--truss4-amber); color: #000;">Download Trial</button>
+                    <button class="btn-secondary">View Packages</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <!-- CSS-only Timber Truss Mockup -->
+                <div class="mockup-3d">
+                    <div class="mockup-window">
+                        <div class="mockup-header"><span></span><span></span><span></span></div>
+                        <div class="mockup-body">
+                            <div class="mockup-sidebar"></div>
+                            <div class="mockup-canvas timber-bg">
+                                <div class="truss-frame">
+                                    <div class="timber-chord bottom-chord"></div>
+                                    <div class="timber-chord top-chord left"></div>
+                                    <div class="timber-chord top-chord right"></div>
+                                    <div class="timber-web king-post"></div>
+                                    <div class="timber-web diag-web left"></div>
+                                    <div class="timber-web diag-web right"></div>
+                                    
+                                    <!-- Metal Plates -->
+                                    <div class="metal-plate plate-top"></div>
+                                    <div class="metal-plate plate-bot-mid"></div>
+                                    <div class="metal-plate plate-bot-left"></div>
+                                    <div class="metal-plate plate-bot-right"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solutions Router Grid (Specific to TRUSS4) -->
+        <section class="solutions-section">
+            <h2 class="section-title">Core Applications</h2>
+            <div class="solutions-grid truss4-grid">
+                
+                <div class="glass-card">
+                    <h3 style="color: var(--truss4-amber);">Truss 3D</h3>
+                    <p>Comprehensive 3D modeling of complex roof structures, including automatic hip and valley generation.</p>
+                    <ul class="program-tags">
+                        <li>Roof Generator</li>
+                        <li>3D Visualization</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--truss4-amber);">Truss 2D</h3>
+                    <p>Detailed structural analysis of individual trusses, checking timber elements and metal plate capacities.</p>
+                    <ul class="program-tags">
+                        <li>Statics Analysis</li>
+                        <li>Joint Verification</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--truss4-amber);">Truss Explorer</h3>
+                    <p>Centralized project management tool for organizing files, generating batch reports, and tracking jobs.</p>
+                    <ul class="program-tags">
+                        <li>Project Management</li>
+                        <li>Batch Processing</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- The Workflow Journey Section -->
+        <section class="timeline-section">
+            <h2 class="section-title" style="margin-bottom: 1rem;">The Complete Workflow</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem;">A seamless pipeline from initial architectural concept to factory production.</p>
+            
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <!-- Step 1 -->
+                <div class="timeline-step">
+                    <div class="step-indicator">1</div>
+                    <div class="step-content glass-card">
+                        <h3>Modeling</h3>
+                        <p>Begin by defining the roof's geometry in <strong>Truss 3D</strong>. The software automatically handles intersections, hips, valleys, and generates the necessary truss layouts based on standard structural rules.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-step">
+                    <div class="step-indicator">2</div>
+                    <div class="step-content glass-card">
+                        <h3>Structural Analysis</h3>
+                        <p>Individual elements are transferred to <strong>Truss 2D</strong>. Here, internal forces are calculated, and timber cross-sections and punched metal plate fasteners are rigorously verified according to chosen regional design codes.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-step">
+                    <div class="step-indicator">3</div>
+                    <div class="step-content glass-card">
+                        <h3>Documentation</h3>
+                        <p>Automatically generate comprehensive outputs including static calculation reports, material take-offs (timber volume and plate quantities), and precise 2D production drawings.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="timeline-step">
+                    <div class="step-indicator">4</div>
+                    <div class="step-content glass-card" style="border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.03);">
+                        <h3>Manufacturing <span class="cnc-badge">BTL / BVX / Hundegger</span></h3>
+                        <p>Export the finalized project directly to factory hardware. TRUSS4 supports native exports to automated CNC timber cutting saws and laser-guided laser projection systems for plate assembly.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
