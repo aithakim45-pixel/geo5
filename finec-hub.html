@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIN EC Structural Software | Fine 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- FIN EC Specific Styles appended for this page -->
+    <style>
+        /* Badge Override for FIN EC */
+        .finec-badge { background: rgba(59, 130, 246, 0.1); color: var(--finec-blue); border: 1px solid rgba(59, 130, 246, 0.2); }
+
+        /* Structural 3D Mockup CSS */
+        .mockup-canvas.structural-bg { background: linear-gradient(to bottom, #14171c, #1a1e24); align-items: center; justify-content: center; }
+        .structural-frame { position: relative; width: 200px; height: 180px; perspective: 800px; transform: rotateX(10deg) rotateY(-10deg); }
+        .struc-column { position: absolute; bottom: 0; width: 30px; height: 150px; background: linear-gradient(90deg, #475569, #334155); border: 1px solid #64748b; border-radius: 2px; }
+        .struc-column.left { left: 0; }
+        .struc-column.right { right: 0; }
+        .struc-beam { position: absolute; top: 0; left: -10px; width: 220px; height: 30px; background: linear-gradient(180deg, #64748b, #475569); border: 1px solid #94a3b8; border-radius: 2px; display: flex; align-items: center; justify-content: space-evenly; }
+        /* Simulated rebar inside the beam */
+        .rebar { height: 4px; width: 90%; background: #ef4444; border-radius: 2px; opacity: 0.8; box-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
+
+        /* Marquee Section CSS */
+        .marquee-section { padding: 4rem 0; border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass); background: rgba(0,0,0,0.2); overflow: hidden; position: relative; display: flex; align-items: center; }
+        .marquee-title { position: absolute; left: 2rem; z-index: 10; font-family: var(--font-heading); font-size: 1.2rem; color: var(--text-main); background: var(--bg-base); padding: 1rem 2rem; border-right: 1px solid var(--border-glass); border-radius: 0 8px 8px 0; box-shadow: 10px 0 20px var(--bg-base); }
+        .marquee-container { width: 100%; overflow: hidden; white-space: nowrap; mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); }
+        .marquee-track { display: inline-block; animation: scrollMarquee 30s linear infinite; padding-left: 250px; /* Offset for title */ }
+        .marquee-item { display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: var(--text-muted); margin: 0 3rem; font-family: var(--font-heading); letter-spacing: 1px; transition: color 0.3s; }
+        .marquee-item:hover { color: var(--text-main); }
+        .marquee-item span { font-size: 0.8rem; font-weight: 400; font-family: var(--font-ui); margin-left: 8px; border: 1px solid var(--border-glass); padding: 2px 8px; border-radius: 12px; }
+        
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Cross-Compatibility Banner CSS */
+        .integration-banner { margin: 6rem 0 8rem 0; background: radial-gradient(circle at center, rgba(59, 130, 246, 0.05) 0%, transparent 70%); border: 1px solid var(--border-glass); border-radius: 24px; padding: 4rem; display: flex; align-items: center; justify-content: space-between; gap: 4rem; position: relative; overflow: hidden; backdrop-filter: blur(12px); }
+        .integration-content { flex: 1; z-index: 2; }
+        .integration-content h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .integration-content h2 span { color: var(--finec-blue); }
+        .integration-content p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1.5rem; }
+        
+        /* CSS Integration Diagram */
+        .integration-visual { flex: 1.2; z-index: 2; display: flex; align-items: center; justify-content: center; }
+        .diagram-container { display: flex; align-items: center; gap: 1rem; width: 100%; justify-content: center; }
+        .sys-box { padding: 1.5rem; border-radius: 12px; text-align: center; font-weight: bold; width: 160px; position: relative; }
+        .sys-box span { display: block; font-size: 0.8rem; font-weight: normal; margin-top: 0.5rem; color: var(--text-muted); }
+        .box-geo5 { background: rgba(34, 197, 94, 0.05); border: 2px solid var(--geo5-green); color: var(--text-main); }
+        .box-finec { background: rgba(59, 130, 246, 0.05); border: 2px solid var(--finec-blue); color: var(--text-main); }
+        
+        .transfer-path { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
+        .path-line { width: 100%; height: 2px; background: dashed 2px var(--border-glass); position: absolute; top: 50%; z-index: 1; }
+        .path-label { background: var(--bg-base); padding: 0.5rem 1rem; border: 1px solid var(--border-glass); border-radius: 20px; font-size: 0.85rem; color: var(--text-muted); z-index: 2; margin-bottom: 0.5rem; }
+        .path-arrow { width: 100%; position: relative; z-index: 2; height: 20px; display: flex; align-items: center; }
+        .path-arrow-line { height: 2px; background: linear-gradient(90deg, var(--geo5-green), var(--finec-blue)); width: 100%; position: relative; }
+        .path-arrow-line::after { content: ''; position: absolute; right: 0; top: -4px; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 8px solid var(--finec-blue); }
+        
+        /* Glowing connection particle */
+        .data-packet { position: absolute; width: 8px; height: 8px; background: #fff; border-radius: 50%; top: 50%; transform: translateY(-50%); box-shadow: 0 0 10px #fff, 0 0 20px var(--finec-blue); animation: packetFlow 2s infinite ease-in-out; }
+        @keyframes packetFlow { 0% { left: 0; opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+
+    </style>
+</head>
+<body>
+
+    <!-- Global Header (Include your existing Mega-Menu from index.html here) -->
+    
+    <main class="suite-hub" id="finec-hub">
+        
+        <!-- Suite Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="suite-badge finec-badge">FIN EC</div>
+                <h1 style="color: var(--text-main);">FIN EC Structural Software</h1>
+                <p>Perform structural analysis and design of concrete, steel, timber, and masonry structures with unparalleled precision.</p>
+                <div class="hero-actions">
+                    <button class="btn-primary" style="background: var(--finec-blue); color: #fff;">Download Trial</button>
+                    <button class="btn-secondary">View Packages</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <!-- CSS-only 3D Structural Mockup -->
+                <div class="mockup-3d">
+                    <div class="mockup-window">
+                        <div class="mockup-header"><span></span><span></span><span></span></div>
+                        <div class="mockup-body">
+                            <div class="mockup-sidebar"></div>
+                            <div class="mockup-canvas structural-bg">
+                                <div class="structural-frame">
+                                    <div class="struc-column left"></div>
+                                    <div class="struc-column right"></div>
+                                    <div class="struc-beam top">
+                                        <div class="rebar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solutions Router Grid -->
+        <section class="solutions-section" style="padding-bottom: 2rem;">
+            <h2 class="section-title">Solutions</h2>
+            <!-- Note: Default grid is 4 columns, perfect for these 4 cards -->
+            <div class="solutions-grid">
+                
+                <div class="glass-card">
+                    <h3 style="color: var(--finec-blue);">Concrete Design</h3>
+                    <p>Design and verify reinforced concrete structures.</p>
+                    <ul class="program-tags">
+                        <li>Concrete</li>
+                        <li>Concrete Fire</li>
+                        <li>Punching</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--finec-blue);">Steel Design</h3>
+                    <p>Verification of steel cross-sections and joints.</p>
+                    <ul class="program-tags">
+                        <li>Steel</li>
+                        <li>Steel Fire</li>
+                        <li>Steel Connections</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--finec-blue);">Timber Design</h3>
+                    <p>Analysis of timber elements and connections.</p>
+                    <ul class="program-tags">
+                        <li>Timber</li>
+                        <li>Timber Fire</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--finec-blue);">Loading & Analysis</h3>
+                    <p>Finite element modeling and load generation.</p>
+                    <ul class="program-tags">
+                        <li>FIN 3D</li>
+                        <li>FIN 2D</li>
+                        <li>Loading</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Supported Codes Marquee -->
+        <section class="marquee-section">
+            <div class="marquee-title">Code Compliance</div>
+            <div class="marquee-container">
+                <div class="marquee-track">
+                    <!-- Track 1 -->
+                    <div class="marquee-item">EN 1992 <span>Eurocode 2</span></div>
+                    <div class="marquee-item">EN 1993 <span>Eurocode 3</span></div>
+                    <div class="marquee-item">EN 1995 <span>Eurocode 5</span></div>
+                    <div class="marquee-item">IBC <span>USA</span></div>
+                    <div class="marquee-item">ACI 318 <span>USA</span></div>
+                    <div class="marquee-item">SIA 262 <span>Switzerland</span></div>
+                    <div class="marquee-item">AS 3600 <span>Australia</span></div>
+                    <div class="marquee-item">IS 456 <span>India</span></div>
+                    
+                    <!-- Track 2 (Duplicated for seamless infinite loop) -->
+                    <div class="marquee-item">EN 1992 <span>Eurocode 2</span></div>
+                    <div class="marquee-item">EN 1993 <span>Eurocode 3</span></div>
+                    <div class="marquee-item">EN 1995 <span>Eurocode 5</span></div>
+                    <div class="marquee-item">IBC <span>USA</span></div>
+                    <div class="marquee-item">ACI 318 <span>USA</span></div>
+                    <div class="marquee-item">SIA 262 <span>Switzerland</span></div>
+                    <div class="marquee-item">AS 3600 <span>Australia</span></div>
+                    <div class="marquee-item">IS 456 <span>India</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cross-Compatibility Banner -->
+        <section class="integration-banner">
+            <div class="integration-content">
+                <h2>Perfect Synergy with <span>GEO5</span></h2>
+                <p>Geotechnical and Structural engineering do not exist in isolation. FIN EC programs communicate perfectly with the GEO5 suite to eliminate repetitive data entry.</p>
+                <ul style="color: var(--text-muted); list-style: disc; margin-left: 1.5rem; line-height: 1.8;">
+                    <li>Export structural geometries directly from GEO5 to FIN EC.</li>
+                    <li>Transfer calculated earth pressures and internal forces automatically.</li>
+                    <li>Perform detailed rebar design in FIN EC using GEO5 load states.</li>
+                </ul>
+            </div>
+            
+            <div class="integration-visual">
+                <div class="diagram-container">
+                    <div class="sys-box box-geo5">
+                        GEO5
+                        <span>Cantilever Wall</span>
+                    </div>
+                    
+                    <div class="transfer-path">
+                        <div class="path-label">Geometry & Forces</div>
+                        <div class="path-arrow">
+                            <div class="path-arrow-line">
+                                <div class="data-packet"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sys-box box-finec">
+                        FIN EC
+                        <span>Concrete Design</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
