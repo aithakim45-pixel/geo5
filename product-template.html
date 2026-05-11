@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Program Name] | Fine 2.0 Software</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Product Page Specific Styles -->
+    <style>
+        /* Define a dynamic accent variable that can be changed via JS or server-side per product */
+        :root { --product-accent: #22c55e; /* Defaulting to GEO5 Green for template */ }
+
+        /* Split-Screen Hero */
+        .product-hero { padding: 140px 4rem 6rem; min-height: 85vh; display: flex; align-items: center; justify-content: space-between; gap: 4rem; max-width: 1400px; margin: 0 auto; }
+        .hero-text { flex: 1; z-index: 2; }
+        .hero-text h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1px; }
+        .hero-text p { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 2.5rem; max-width: 90%; line-height: 1.6; }
+        .hero-ctas { display: flex; gap: 1rem; align-items: center; }
+        
+        /* High-Res 3D Perspective Placeholder (CSS Only) */
+        .hero-visual { flex: 1; perspective: 1200px; display: flex; justify-content: center; }
+        .perspective-mockup { width: 500px; height: 350px; background: rgba(20, 23, 28, 0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; backdrop-filter: blur(16px); transform: rotateX(20deg) rotateY(-25deg) rotateZ(5deg); box-shadow: -30px 40px 60px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05); display: flex; flex-direction: column; overflow: hidden; position: relative; animation: hoverFloat 6s ease-in-out infinite; }
+        .mockup-ui-top { height: 40px; background: rgba(0,0,0,0.4); border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; padding: 0 1rem; gap: 8px; }
+        .mockup-ui-top span { display: block; width: 12px; height: 12px; border-radius: 50%; background: #475569; }
+        .mockup-ui-body { flex: 1; display: flex; }
+        .mockup-ui-sidebar { width: 80px; background: rgba(0,0,0,0.2); border-right: 1px solid rgba(255,255,255,0.05); }
+        .mockup-ui-content { flex: 1; position: relative; overflow: hidden; background: radial-gradient(circle at center, rgba(34, 197, 94, 0.1) 0%, transparent 70%); }
+        .wireframe-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 20px 20px; transform: rotateX(60deg); transform-origin: bottom; }
+        
+        @keyframes hoverFloat { 0%, 100% { transform: rotateX(20deg) rotateY(-25deg) rotateZ(5deg) translateY(0); } 50% { transform: rotateX(20deg) rotateY(-25deg) rotateZ(5deg) translateY(-20px); } }
+
+        /* Sticky In-Page Navigation */
+        .page-nav-wrapper { position: sticky; top: 80px; z-index: 900; background: rgba(15, 17, 21, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-glass); transition: all 0.3s ease; }
+        .page-nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: center; gap: 3rem; padding: 1rem 2rem; }
+        .page-nav a { font-weight: 500; color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 6px; transition: all 0.2s; font-family: var(--font-heading); }
+        .page-nav a:hover, .page-nav a.active { color: var(--text-main); background: rgba(255,255,255,0.05); }
+
+        /* Alternating Scrollytelling Features */
+        .product-section { max-width: 1200px; margin: 0 auto; padding: 8rem 2rem; }
+        .feature-row { display: flex; align-items: center; gap: 6rem; margin-bottom: 8rem; }
+        .feature-row:nth-child(even) { flex-direction: row-reverse; }
+        .feature-text { flex: 1; }
+        .feature-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .feature-text p { color: var(--text-muted); font-size: 1.1rem; line-height: 1.7; }
+        
+        .feature-visual { flex: 1; position: relative; height: 350px; background: var(--bg-surface); border: 1px solid var(--border-glass); border-radius: 16px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        /* CSS Shape Placeholders for Features */
+        .css-chart { width: 60%; height: 60%; border-bottom: 2px solid rgba(255,255,255,0.2); border-left: 2px solid rgba(255,255,255,0.2); position: relative; }
+        .chart-bar { position: absolute; bottom: 0; width: 20%; background: var(--product-accent); border-radius: 4px 4px 0 0; }
+        
+        /* Fade-Up Animation Classes */
+        .anim-fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .anim-fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Engineered for Compliance */
+        .compliance-wrapper { background: rgba(0,0,0,0.3); border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass); }
+        .compliance-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .compliance-badge { display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; transition: transform 0.2s; }
+        .compliance-badge:hover { transform: translateY(-5px); background: rgba(255,255,255,0.05); }
+        .check-icon { width: 24px; height: 24px; border-radius: 50%; background: rgba(34, 197, 94, 0.1); border: 1px solid var(--product-accent); display: flex; align-items: center; justify-content: center; color: var(--product-accent); font-size: 12px; font-weight: bold; }
+
+        /* Reports Showcase */
+        .reports-layout { display: flex; gap: 4rem; align-items: center; }
+        .report-visual { flex: 1; display: flex; justify-content: center; perspective: 1000px; }
+        /* CSS PDF Preview Placeholder */
+        .pdf-preview { width: 300px; height: 400px; background: #fff; border-radius: 4px; box-shadow: -10px 20px 30px rgba(0,0,0,0.5); transform: rotateY(-15deg); position: relative; padding: 2rem; color: #333; display: flex; flex-direction: column; gap: 1rem; }
+        .pdf-header { height: 20px; border-bottom: 2px solid var(--product-accent); width: 100%; margin-bottom: 1rem; }
+        .pdf-line { height: 8px; background: #e2e8f0; border-radius: 4px; width: 100%; }
+        .pdf-line.short { width: 60%; }
+        .pdf-image-box { height: 100px; background: #f1f5f9; border: 1px dashed #cbd5e1; margin: 1rem 0; }
+
+        /* Floating CTA */
+        .floating-cta { position: fixed; bottom: 2rem; right: 2rem; background: var(--product-accent); color: #000; padding: 1rem 2rem; border-radius: 50px; font-weight: 600; font-family: var(--font-ui); text-decoration: none; box-shadow: 0 10px 20px rgba(0,0,0,0.4); opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000; }
+        .floating-cta.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        .floating-cta:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 25px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body>
+
+    <!-- Global Header Placeholder -->
+    <header class="site-header">
+        <div class="logo">FINE<span>2.0</span></div>
+        <nav class="main-nav"><!-- Mega Menu Goes Here --></nav>
+    </header>
+
+    <!-- Dynamic Hero Section -->
+    <section class="product-hero" id="hero">
+        <div class="hero-text">
+            <h1 style="color: var(--text-main);">[Software Name]</h1>
+            <p>A comprehensive description of the specific program goes here. It explains the core utility, the types of engineering problems it solves, and why it is the industry standard for this specific calculation.</p>
+            <div class="hero-ctas">
+                <a href="#" class="btn-primary" style="background: var(--product-accent); color: #000;">Download Demo</a>
+                <a href="#" class="btn-secondary">Request a Quote</a>
+            </div>
+        </div>
+        
+        <div class="hero-visual">
+            <div class="perspective-mockup">
+                <div class="mockup-ui-top"><span></span><span></span><span></span></div>
+                <div class="mockup-ui-body">
+                    <div class="mockup-ui-sidebar"></div>
+                    <div class="mockup-ui-content">
+                        <div class="wireframe-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky In-Page Navigation -->
+    <div class="page-nav-wrapper" id="sticky-nav">
+        <nav class="page-nav">
+            <a href="#features" class="page-link">Features</a>
+            <a href="#codes" class="page-link">Supported Codes</a>
+            <a href="#reports" class="page-link">Sample Reports</a>
+            <a href="#pricing" class="page-link">Pricing</a>
+        </nav>
+    </div>
+
+    <!-- Scrollytelling Features Section -->
+    <section id="features" class="product-section">
+        
+        <div class="feature-row anim-fade-up">
+            <div class="feature-text">
+                <h2>Advanced Analytical Engine</h2>
+                <p>Process complex stratigraphy and material parameters instantly. The analytical engine provides real-time feedback as you adjust geometry, allowing for rapid iteration and optimization of your design without waiting for load times.</p>
+            </div>
+            <div class="feature-visual">
+                <!-- CSS Placeholder for feature 1 -->
+                <div class="css-chart">
+                    <div class="chart-bar" style="left: 10%; height: 30%;"></div>
+                    <div class="chart-bar" style="left: 40%; height: 70%;"></div>
+                    <div class="chart-bar" style="left: 70%; height: 50%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature-row anim-fade-up">
+            <div class="feature-text">
+                <h2>Parametric Modeling</h2>
+                <p>Define structures using parametric inputs rather than static drawings. When a global parameter changes—such as retaining wall height or soil friction angle—the entire model and resulting internal forces update automatically.</p>
+            </div>
+            <div class="feature-visual">
+                <!-- CSS Placeholder for feature 2 -->
+                <div style="width: 120px; height: 120px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative;">
+                    <div style="width: 80px; height: 80px; border: 2px solid var(--product-accent); border-radius: 50%;"></div>
+                    <div style="position: absolute; width: 100%; height: 2px; background: rgba(255,255,255,0.2); transform: rotate(45deg);"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Engineered for Compliance -->
+    <section id="codes" class="compliance-wrapper">
+        <div class="product-section anim-fade-up">
+            <h2 style="text-align: center; font-size: 2.5rem;">Engineered for Compliance</h2>
+            <p style="text-align: center; color: var(--text-muted); max-width: 600px; margin: 1rem auto 0;">Calculate strictly according to the latest international and national standards, with full transparency in applied partial factors.</p>
+            
+            <div class="compliance-grid">
+                <div class="compliance-badge"><div class="check-icon">✓</div><span>EN 1997-1 (Eurocode 7)</span></div>
+                <div class="compliance-badge"><div class="check-icon">✓</div><span>AASHTO LRFD</span></div>
+                <div class="compliance-badge"><div class="check-icon">✓</div><span>ACI 318-19</span></div>
+                <div class="compliance-badge"><div class="check-icon">✓</div><span>AS 4678 (Australia)</span></div>
+                <div class="compliance-badge"><div class="check-icon">✓</div><span>BS 8002 (UK)</span></div>
+                <div class="compliance-badge"><div class="check-icon">✓</div><span>GB 50007 (China)</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Output & Reporting Showcase -->
+    <section id="reports" class="product-section">
+        <div class="reports-layout anim-fade-up">
+            <div class="feature-text">
+                <h2>Professional Output Reports</h2>
+                <p>Generate highly detailed, mathematically transparent calculation protocols. Our reports are designed to be handed directly to checking authorities or clients.</p>
+                <ul style="color: var(--text-muted); margin-top: 1.5rem; line-height: 2; list-style-type: disc; margin-left: 1.5rem;">
+                    <li>Step-by-step mathematical derivations.</li>
+                    <li>Embedded, scaled diagrams of cross-sections.</li>
+                    <li>Export to PDF, MS Word, and RTF formats.</li>
+                    <li>Customizable company headers and logos.</li>
+                </ul>
+            </div>
+            
+            <div class="report-visual">
+                <div class="pdf-preview">
+                    <div class="pdf-header"></div>
+                    <div style="font-weight: bold; font-size: 1.2rem; margin-bottom: 0.5rem;">Calculation Protocol</div>
+                    <div class="pdf-line"></div>
+                    <div class="pdf-line short"></div>
+                    <div class="pdf-image-box"></div>
+                    <div class="pdf-line"></div>
+                    <div class="pdf-line"></div>
+                    <div class="pdf-line short"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating CTA -->
+    <a href="#" id="floating-cta" class="floating-cta">Download Demo</a>
+
+    <!-- Shared main.js for global logic -->
+    <script src="main.js"></script>
+
+    <!-- Template Specific Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Scroll animations for feature rows and sections
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // Trigger when 15% of the element is visible
+            };
+
+            const fadeUpObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.anim-fade-up').forEach(el => {
+                fadeUpObserver.observe(el);
+            });
+
+            // 2. Floating CTA visibility logic
+            const heroSection = document.getElementById('hero');
+            const floatingCta = document.getElementById('floating-cta');
+            
+            if (heroSection && floatingCta) {
+                const ctaObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        // If hero is out of view, show the floating CTA
+                        if (!entry.isIntersecting) {
+                            floatingCta.classList.add('visible');
+                        } else {
+                            floatingCta.classList.remove('visible');
+                        }
+                    });
+                }, { threshold: 0 }); // Trigger as soon as hero completely leaves viewport
+                
+                ctaObserver.observe(heroSection);
+            }
+
+            // 3. Smooth scrolling for page navigation
+            document.querySelectorAll('.page-link').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        // Offset by header (80px) + sticky nav height (~60px)
+                        const offsetTop = targetSection.getBoundingClientRect().top + window.pageYOffset - 140;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
