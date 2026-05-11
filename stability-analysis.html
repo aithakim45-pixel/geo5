@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stability Analysis Solutions | GEO5</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --category-accent: #10B981; /* GEO5 Green */
+        }
+        
+        .category-hero {
+            padding: 8rem 5%;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .category-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--category-accent);
+        }
+
+        .category-hero p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Program Cards Layout */
+        .programs-grid {
+            padding: 5rem 5%;
+            background-color: #f8fafc;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--category-accent);
+            transition: transform 0.3s ease;
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .program-card h2 {
+            font-size: 1.8rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .program-card p {
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .apps-list {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .apps-list strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #0f172a;
+        }
+
+        /* Reusing your CSS buttons */
+        .app-link {
+            display: inline-block;
+            background: #f1f5f9;
+            color: var(--category-accent);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .app-link:hover {
+            background: #e2e8f0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Assuming you have a navigation bar here -->
+    <nav class="main-nav"></nav>
+
+    <section class="category-hero">
+        <h1>Stability Analysis</h1>
+        <p>Comprehensive solutions for analyzing the stability of earth slopes, rock slopes, and man-made structures using both analytical methods and FEM.</p>
+    </section>
+
+    <section class="programs-grid">
+        
+        <!-- Earth Slopes -->
+        <div class="program-card">
+            <h2>Stability of Earth Slopes</h2>
+            <p>Determine the worst circular or polygonal slip surface and solve specific groundwater scenarios whilst incorporating stabilization elements such as anchors, nails, reinforcements, and piles.</p>
+            <div class="apps-list">
+                <strong>Included Programs:</strong>
+                <!-- This links to the specific product page I gave you in the previous step! -->
+                <a href="slope-stability.html" class="app-link">Slope Stability</a>
+                <a href="anti-slide-pile.html" class="app-link">Anti-Slide Pile</a>
+            </div>
+        </div>
+
+        <!-- Rock Slopes -->
+        <div class="program-card">
+            <h2>Stability of Rock Slopes</h2>
+            <p>Solve the stability of rock slopes according to planar or polygonal slip surfaces. Includes advanced analysis of rock wedges using the stereographic Lambert projection.</p>
+            <div class="apps-list">
+                <strong>Included Programs:</strong>
+                <a href="rock-stability.html" class="app-link">Rock Stability</a>
+            </div>
+        </div>
+
+        <!-- Man-Made Slopes -->
+        <div class="program-card">
+            <h2>Man-Made Slopes</h2>
+            <p>Design slopes reinforced with geotextiles, nails, shotcrete, or steel meshing. Perform verifications for internal stability, slip on reinforcement, overturning, and bearing capacity.</p>
+            <div class="apps-list">
+                <strong>Included Programs:</strong>
+                <a href="mse-wall.html" class="app-link">MSE Wall</a>
+                <a href="nailed-slopes.html" class="app-link">Nailed Slopes</a>
+            </div>
+        </div>
+
+        <!-- FEM Analysis -->
+        <div class="program-card">
+            <h2>Advanced FEM Analysis</h2>
+            <p>Analyze groundwater using numerical seepage calculations for steady and transient flow. Model generic slopes using stepwise reduction of shear strength parameters.</p>
+            <div class="apps-list">
+                <strong>Included Programs:</strong>
+                <a href="fem.html" class="app-link">FEM</a>
+                <a href="fem-water-flow.html" class="app-link">FEM Water Flow</a>
+            </div>
+        </div>
+
+    </section>
+
+</body>
+</html>
