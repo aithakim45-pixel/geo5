@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fine Software 2.0 | Architectural Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 1. THE MEGA-MENU -->
+    <header class="site-header">
+        <div class="logo">FINE<span>2.0</span></div>
+        
+        <nav class="main-nav">
+            <div class="nav-item">
+                <a href="#suites">Software Suites</a>
+                <div class="dropdown mega-dropdown">
+                    <div class="dropdown-grid suites-grid">
+                        <div class="suite-col geo5">
+                            <h4>GEO5 <span>Geotechnical</span></h4>
+                            <ul>
+                                <li>Stability Analysis</li>
+                                <li>Excavation</li>
+                                <li>Foundations</li>
+                                <li>Tunnels</li>
+                            </ul>
+                        </div>
+                        <div class="suite-col finec">
+                            <h4>FIN EC <span>Structural</span></h4>
+                            <ul>
+                                <li>Concrete</li>
+                                <li>Steel</li>
+                                <li>Timber</li>
+                                <li>Fire Resistance</li>
+                            </ul>
+                        </div>
+                        <div class="suite-col truss4">
+                            <h4>TRUSS4 <span>Timber Roofs</span></h4>
+                            <ul>
+                                <li>Truss Design</li>
+                                <li>3D Modeling</li>
+                                <li>Manufacturing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <a href="#programs">Programs (A-Z)</a>
+                <div class="dropdown mega-dropdown programs-dropdown">
+                    <input type="text" id="program-search" placeholder="Search 30+ programs..." class="search-input">
+                    <div class="programs-grid" id="programs-list">
+                        <a href="#">Abutment</a>
+                        <a href="#">Anti-Slide Pile</a>
+                        <a href="#">Beam</a>
+                        <a href="#">Cantilever Wall</a>
+                        <a href="#">Earth Pressures</a>
+                        <a href="#">Gabion</a>
+                        <a href="#">Micropile</a>
+                        <a href="#">Nailed Slopes</a>
+                        <a href="#">Pile Group</a>
+                        <a href="#">Rock Stability</a>
+                        <a href="#">Settlement</a>
+                        <a href="#">Spread Footing</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
+                <a href="#resources">Resources</a>
+                <div class="dropdown mega-dropdown">
+                    <div class="dropdown-grid">
+                        <div class="resource-col">
+                            <h4>Learning</h4>
+                            <ul>
+                                <li>Engineering Manuals</li>
+                                <li>Video Tutorials</li>
+                                <li>Documentation</li>
+                            </ul>
+                        </div>
+                        <div class="resource-col">
+                            <h4>Support</h4>
+                            <ul>
+                                <li>Contact Helpdesk</li>
+                                <li>Downloads & Updates</li>
+                                <li>Licensing</li>
+                            </ul>
+                        </div>
+                        <div class="resource-col">
+                            <h4>Company</h4>
+                            <ul>
+                                <li>News & Events</li>
+                                <li>About Us</li>
+                                <li>Partners</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="header-actions">
+            <select class="action-select"><option>USD</option><option>EUR</option></select>
+            <select class="action-select"><option>EN</option><option>DE</option><option>CZ</option></select>
+            <a href="#" class="btn-primary">Shop / Trial</a>
+        </div>
+    </header>
+
+    <!-- STICKY PURCHASE BAR (Hidden by default, triggered on program page) -->
+    <div class="sticky-purchase-bar" id="sticky-bar">
+        <div class="sticky-content">
+            <h3 class="sticky-title">Anti-Slide Pile</h3>
+            <div class="sticky-actions">
+                <span class="price">€ 450</span>
+                <button class="btn-primary">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. DYNAMIC SUITE HUB TEMPLATE -->
+    <main class="suite-hub" id="suite-view">
+        
+        <!-- Suite Hero -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="suite-badge geo5-badge">GEO5</div>
+                <h1>Geotechnical Engineering Software</h1>
+                <p>Comprehensive software suite for solving geotechnical problems. Intuitive, powerful, and integrated.</p>
+                <div class="hero-actions">
+                    <button class="btn-primary">Download Trial</button>
+                    <button class="btn-secondary">View Pricing</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <!-- CSS-only 3D Mockup Graphic -->
+                <div class="mockup-3d">
+                    <div class="mockup-window">
+                        <div class="mockup-header"><span></span><span></span><span></span></div>
+                        <div class="mockup-body">
+                            <div class="mockup-sidebar"></div>
+                            <div class="mockup-canvas">
+                                <div class="mockup-soil-layer l1"></div>
+                                <div class="mockup-soil-layer l2"></div>
+                                <div class="mockup-wall"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solutions Router Grid -->
+        <section class="solutions-section">
+            <h2 class="section-title">Solutions</h2>
+            <div class="solutions-grid">
+                <div class="glass-card">
+                    <h3>Retaining Wall Design</h3>
+                    <p>Analyze gravity, cantilever, and prefab walls.</p>
+                    <ul class="program-tags">
+                        <li>Cantilever Wall</li>
+                        <li>Gabion</li>
+                        <li>Masonry Wall</li>
+                    </ul>
+                </div>
+                <div class="glass-card">
+                    <h3>Deep Foundations</h3>
+                    <p>Bearing capacity and settlement of piles.</p>
+                    <ul class="program-tags">
+                        <li>Pile</li>
+                        <li>Micropile</li>
+                        <li>Pile Group</li>
+                    </ul>
+                </div>
+                <div class="glass-card">
+                    <h3>Slope Stability</h3>
+                    <p>Circular and polygonal slip surface analysis.</p>
+                    <ul class="program-tags">
+                        <li>Slope Stability</li>
+                        <li>Rock Stability</li>
+                    </ul>
+                </div>
+                <div class="glass-card">
+                    <h3>Excavation Design</h3>
+                    <p>Design and analysis of retaining structures.</p>
+                    <ul class="program-tags">
+                        <li>Sheeting Design</li>
+                        <li>Sheeting Check</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Highlight Scroll (Scrollytelling) -->
+        <section class="scrollytelling-section">
+            <div class="scroll-content-left">
+                <div class="scroll-text-item active" data-step="1">
+                    <h3>Integrated Data Workflow</h3>
+                    <p>Pass data seamlessly between all 30+ programs without re-entering parameters. A single soil profile drives the entire suite.</p>
+                </div>
+                <div class="scroll-text-item" data-step="2">
+                    <h3>Comprehensive Reporting</h3>
+                    <p>Generate precise, customizable engineering reports that include equations, diagrams, and localized design standards.</p>
+                </div>
+                <div class="scroll-text-item" data-step="3">
+                    <h3>3D Stratigraphy</h3>
+                    <p>Build complex 3D geological models from borehole data, CPTs, and field tests for accurate spatial representation.</p>
+                </div>
+            </div>
+            
+            <div class="scroll-visuals-right">
+                <!-- CSS-only visual representations -->
+                <div class="scroll-visual-block" id="visual-1">
+                    <div class="css-graphic workflow-graphic">
+                        <div class="node">Input</div><div class="line"></div><div class="node">Compute</div><div class="line"></div><div class="node">Output</div>
+                    </div>
+                </div>
+                <div class="scroll-visual-block" id="visual-2">
+                    <div class="css-graphic report-graphic">
+                        <div class="doc-line title"></div>
+                        <div class="doc-line"></div>
+                        <div class="doc-line short"></div>
+                        <div class="doc-box"></div>
+                    </div>
+                </div>
+                <div class="scroll-visual-block" id="visual-3">
+                    <div class="css-graphic layer-graphic">
+                        <div class="layer-3d top"></div>
+                        <div class="layer-3d mid"></div>
+                        <div class="layer-3d bot"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 3. SPECIFIC PROGRAM PAGE TEMPLATE -->
+    <main class="program-page" id="program-view">
+        <section class="program-hero" id="program-hero-trigger">
+            <div class="program-hero-content">
+                <h1>Anti-Slide Pile</h1>
+                <p>Design of pile walls stabilizing slope movement. Calculates active and passive pressures, slip surface parameters, and structural forces.</p>
+            </div>
+        </section>
+
+        <section class="tabbed-interface-section">
+            <div class="tab-nav">
+                <button class="tab-btn active" data-target="tab-features">Features</button>
+                <button class="tab-btn" data-target="tab-outputs">Outputs</button>
+                <button class="tab-btn" data-target="tab-standards">Standards Supported</button>
+            </div>
+            
+            <div class="tab-content-container glass-card">
+                <div class="tab-pane active" id="tab-features">
+                    <h3>Core Capabilities</h3>
+                    <ul>
+                        <li>Analysis of active earth pressures on pile walls.</li>
+                        <li>Determination of internal forces and displacements.</li>
+                        <li>Automatic verification of concrete/steel cross-sections.</li>
+                    </ul>
+                </div>
+                <div class="tab-pane" id="tab-outputs">
+                    <h3>Calculation Outputs</h3>
+                    <ul>
+                        <li>Detailed step-by-step mathematical reports.</li>
+                        <li>DXF export of structural drawings.</li>
+                        <li>BIM export in IFC format.</li>
+                    </ul>
+                </div>
+                <div class="tab-pane" id="tab-standards">
+                    <h3>Supported Design Codes</h3>
+                    <ul>
+                        <li>EN 1997-1, EN 1992-1, EN 1993-1 (Eurocodes)</li>
+                        <li>ACI 318, LRFD (USA)</li>
+                        <li>AS 3600 (Australia)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
