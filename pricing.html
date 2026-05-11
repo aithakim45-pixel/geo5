@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing & Packages | Fine 2.0 Software</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Pricing Specific Styles -->
+    <style>
+        .pricing-page { padding-top: 140px; max-width: 1400px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+        
+        /* Pricing Hero */
+        .pricing-hero { text-align: center; margin-bottom: 4rem; }
+        .pricing-hero h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1px; }
+        .pricing-hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin: 0 auto; }
+
+        /* Pure CSS Toggle Switch */
+        .toggle-container { display: flex; justify-content: center; margin-bottom: 5rem; }
+        .pricing-toggle { display: flex; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 40px; border: 1px solid var(--border-glass); width: 450px; position: relative; backdrop-filter: blur(8px); }
+        .pricing-toggle input { display: none; }
+        .pricing-toggle label { flex: 1; text-align: center; padding: 1rem 1.5rem; cursor: pointer; color: var(--text-muted); font-weight: 600; font-family: var(--font-heading); z-index: 2; transition: color 0.3s; position: relative; }
+        
+        .toggle-slider { position: absolute; top: 6px; left: 6px; width: calc(50% - 6px); height: calc(100% - 12px); background: #fff; border-radius: 30px; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        
+        /* Toggle Logic */
+        #perpetual:checked ~ .toggle-slider { transform: translateX(0); }
+        #subscription:checked ~ .toggle-slider { transform: translateX(100%); }
+        #perpetual:checked ~ label[for="perpetual"] { color: #000; }
+        #subscription:checked ~ label[for="subscription"] { color: #000; }
+
+        /* Pricing Cards Grid */
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-bottom: 8rem; }
+        .pricing-card { background: var(--bg-surface); border: 1px solid var(--border-glass); border-radius: 20px; padding: 3rem 2rem; backdrop-filter: blur(16px); display: flex; flex-direction: column; transition: transform 0.3s ease, border-color 0.3s ease; position: relative; overflow: hidden; }
+        .pricing-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); }
+        
+        /* Popular Card Styling */
+        .pricing-card.popular { border-color: var(--geo5-green); box-shadow: 0 20px 50px rgba(34, 197, 94, 0.1); background: rgba(34, 197, 94, 0.03); }
+        .ribbon { position: absolute; top: 1.5rem; right: -2.5rem; background: var(--geo5-green); color: #000; padding: 0.5rem 4rem; transform: rotate(45deg); font-family: var(--font-heading); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        
+        /* Card Typography */
+        .package-name { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .package-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; min-height: 45px; }
+        .price-display { font-size: 3.5rem; font-family: var(--font-heading); font-weight: 700; margin-bottom: 2rem; display: flex; align-items: baseline; gap: 0.5rem; }
+        .price-display .currency { font-size: 1.5rem; font-weight: 500; color: var(--text-muted); }
+        .price-display .term { font-size: 1rem; font-weight: 400; color: var(--text-muted); font-family: var(--font-ui); }
+        
+        /* Features List */
+        .features-list { list-style: none; margin-bottom: 3rem; flex: 1; }
+        .features-list li { margin-bottom: 1rem; color: var(--text-muted); display: flex; align-items: flex-start; gap: 1rem; line-height: 1.4; }
+        .features-list li::before { content: '✓'; color: var(--geo5-green); font-weight: bold; }
+        
+        .pricing-card .btn-primary { width: 100%; text-align: center; font-size: 1.1rem; padding: 1rem; }
+        .pricing-card.popular .btn-primary { background: var(--geo5-green); color: #fff; }
+        .pricing-card.popular .btn-primary:hover { background: #16a34a; }
+
+        /* Individual Modules Accordion Table */
+        .modules-section { max-width: 1000px; margin: 0 auto 8rem; }
+        .modules-section h2 { text-align: center; font-size: 2.5rem; margin-bottom: 1rem; }
+        .modules-section > p { text-align: center; color: var(--text-muted); margin-bottom: 3rem; }
+        
+        .accordion { background: var(--bg-surface); border: 1px solid var(--border-glass); border-radius: 12px; margin-bottom: 1rem; backdrop-filter: blur(8px); transition: background 0.3s; }
+        .accordion summary { padding: 1.5rem 2rem; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        .accordion summary::-webkit-details-marker { display: none; }
+        .accordion summary::after { content: '+'; font-size: 1.5rem; font-weight: 300; transition: transform 0.3s; color: var(--geo5-green); }
+        .accordion[open] summary::after { transform: rotate(45deg); color: #ef4444; }
+        
+        .accordion-content { padding: 0 2rem 1.5rem; }
+        .module-row { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px dashed rgba(255,255,255,0.1); }
+        .module-row:last-child { border-bottom: none; }
+        .module-name { font-weight: 500; }
+        .module-price { font-family: var(--font-heading); font-weight: 600; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+    <!-- Global Header Placeholder -->
+    <header class="site-header">
+        <div class="logo">FINE<span>2.0</span></div>
+        <nav class="main-nav"><!-- Mega Menu Goes Here --></nav>
+    </header>
+
+    <main class="pricing-page">
+        
+        <section class="pricing-hero">
+            <h1>Transparent Pricing for Every Engineering Need.</h1>
+            <p>Choose a tailored package optimized for your discipline, or build your own suite module by module. Switch between perpetual ownership or flexible annual subscriptions.</p>
+        </section>
+
+        <!-- Dynamic Toggle Switch -->
+        <div class="toggle-container">
+            <div class="pricing-toggle">
+                <input type="radio" name="billing" id="perpetual" checked>
+                <label for="perpetual">Perpetual License</label>
+                
+                <input type="radio" name="billing" id="subscription">
+                <label for="subscription">Annual Subscription</label>
+                
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+
+        <!-- Pricing Cards Grid -->
+        <section class="pricing-grid">
+            
+            <!-- Card 1: Basic -->
+            <div class="pricing-card">
+                <h3 class="package-name">Foundation Package</h3>
+                <p class="package-desc">Essential tools for designing and analyzing shallow and deep foundations.</p>
+                <div class="price-display">
+                    <span class="currency">€</span>
+                    <span class="dynamic-price" data-perp="1,950" data-sub="750">1,950</span>
+                    <span class="term dynamic-term" data-perp="One-Time" data-sub="/ year">One-Time</span>
+                </div>
+                <ul class="features-list">
+                    <li>Spread Footing & Slab</li>
+                    <li>Pile & Micropile</li>
+                    <li>Settlement Analysis</li>
+                    <li>Earth Pressures</li>
+                    <li>Basic Output Reports</li>
+                </ul>
+                <button class="btn-secondary">Buy Package</button>
+            </div>
+
+            <!-- Card 2: Popular -->
+            <div class="pricing-card popular">
+                <div class="ribbon">Most Popular</div>
+                <h3 class="package-name" style="color: var(--geo5-green);">Retaining Wall Package</h3>
+                <p class="package-desc">The industry standard for verification of all types of retaining wall structures.</p>
+                <div class="price-display">
+                    <span class="currency">€</span>
+                    <span class="dynamic-price" data-perp="3,450" data-sub="1,250">3,450</span>
+                    <span class="term dynamic-term" data-perp="One-Time" data-sub="/ year">One-Time</span>
+                </div>
+                <ul class="features-list">
+                    <li>Cantilever & Gravity Wall</li>
+                    <li>Gabion & Masonry Wall</li>
+                    <li>Nailed Slopes & Earth Pressures</li>
+                    <li>Slope Stability Integration</li>
+                    <li>Advanced DXF/BIM Export</li>
+                    <li>Priority Technical Support</li>
+                </ul>
+                <button class="btn-primary">Buy Package</button>
+            </div>
+
+            <!-- Card 3: Enterprise -->
+            <div class="pricing-card">
+                <h3 class="package-name">Complete GEO5 Suite</h3>
+                <p class="package-desc">Unrestricted access to all 30+ geotechnical programs and stratigraphy modeling.</p>
+                <div class="price-display">
+                    <span class="currency">€</span>
+                    <span class="dynamic-price" data-perp="7,900" data-sub="2,900">7,900</span>
+                    <span class="term dynamic-term" data-perp="One-Time" data-sub="/ year">One-Time</span>
+                </div>
+                <ul class="features-list">
+                    <li>All Foundation & Wall modules</li>
+                    <li>Stratigraphy (3D Subsoil Modeling)</li>
+                    <li>FEM (Finite Element Analysis)</li>
+                    <li>Tunnels & Shafts</li>
+                    <li>Global Multi-User Licensing</li>
+                </ul>
+                <button class="btn-secondary">Contact Sales</button>
+            </div>
+
+        </section>
+
+        <!-- Individual Modules Add-on Table -->
+        <section class="modules-section">
+            <h2>Individual Modules</h2>
+            <p>Build your own custom suite. Seamlessly integrate individual modules as your projects require them.</p>
+
+            <details class="accordion">
+                <summary>Stability Analysis</summary>
+                <div class="accordion-content">
+                    <div class="module-row">
+                        <span class="module-name">Slope Stability</span>
+                        <span class="module-price dynamic-addon" data-perp="€ 550" data-sub="€ 200 / yr">€ 550</span>
+                    </div>
+                    <div class="module-row">
+                        <span class="module-name">Rock Stability</span>
+                        <span class="module-price dynamic-addon" data-perp="€ 450" data-sub="€ 180 / yr">€ 450</span>
+                    </div>
+                    <div class="module-row">
+                        <span class="module-name">Nailed Slopes</span>
+                        <span class="module-price dynamic-addon" data-perp="€ 500" data-sub="€ 190 / yr">€ 500</span>
+                    </div>
+                </div>
+            </details>
+
+            <details class="accordion">
+                <summary>Excavation Design</summary>
+                <div class="accordion-content">
+                    <div class="module-row">
+                        <span class="module-name">Sheeting Design</span>
+                        <span class="module-price dynamic-addon" data-perp="€ 650" data-sub="€ 250 / yr">€ 650</span>
+                    </div>
+                    <div class="module-row">
+                        <span class="module-name">Sheeting Check</span>
+                        <span class="module-price dynamic-addon" data-perp="€ 850" data-sub="€ 320 / yr">€ 850</span>
+                    </div>
+                    <div class="module-row">
+                        <span class="module-name">Shaft</span>
+                        <span class="module-price dynamic-addon" data-perp="€ 500" data-sub="€ 190 / yr">€ 500</span>
+                    </div>
+                </div>
+            </details>
+
+            <details class="accordion">
+                <summary>Geological Modeling (BIM)</summary>
+                <div class="accordion-content">
+                    <div class="module-row">
+                        <span class="module-name">Stratigraphy</span>
+                        <span class="module-price dynamic-addon" data-perp="€ 1,200" data-sub="€ 450 / yr">€ 1,200</span>
+                    </div>
+                    <div class="module-row">
+                        <span class="module-name">Stratigraphy - Logs</span>
+                        <span class="module-price dynamic-addon" data-perp="€ 400" data-sub="€ 150 / yr">€ 400</span>
+                    </div>
+                    <div class="module-row">
+                        <span class="module-name">Stratigraphy - Cross Sections</span>
+                        <span class="module-price dynamic-addon" data-perp="€ 400" data-sub="€ 150 / yr">€ 400</span>
+                    </div>
+                </div>
+            </details>
+            
+        </section>
+
+    </main>
+
+    <!-- Shared main.js for global logic -->
+    <script src="main.js"></script>
+
+    <!-- Pricing Toggle Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleInputs = document.querySelectorAll('input[name="billing"]');
+            
+            // Elements to update
+            const prices = document.querySelectorAll('.dynamic-price');
+            const terms = document.querySelectorAll('.dynamic-term');
+            const addons = document.querySelectorAll('.dynamic-addon');
+
+            toggleInputs.forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const mode = e.target.id === 'perpetual' ? 'perp' : 'sub';
+
+                    // Update main cards
+                    prices.forEach(price => {
+                        // Add a quick fade out/in effect
+                        price.style.opacity = 0;
+                        setTimeout(() => {
+                            price.textContent = price.getAttribute(`data-${mode}`);
+                            price.style.opacity = 1;
+                        }, 200);
+                    });
+
+                    terms.forEach(term => {
+                        term.style.opacity = 0;
+                        setTimeout(() => {
+                            term.textContent = term.getAttribute(`data-${mode}`);
+                            term.style.opacity = 1;
+                        }, 200);
+                    });
+
+                    // Update accordion table
+                    addons.forEach(addon => {
+                        addon.textContent = addon.getAttribute(`data-${mode}`);
+                    });
+                });
+            });
+
+            // Ensure smooth transitions on prices
+            prices.forEach(p => p.style.transition = "opacity 0.2s");
+            terms.forEach(t => t.style.transition = "opacity 0.2s");
+        });
+    </script>
+</body>
+</html>
