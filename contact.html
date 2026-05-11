@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact & Resellers | Fine 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Contact Specific Styles -->
+    <style>
+        .contact-page { padding-top: 140px; padding-bottom: 8rem; }
+        
+        /* Hero Section */
+        .contact-hero { text-align: center; margin-bottom: 4rem; padding: 0 2rem; }
+        .contact-hero h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1px; }
+        .contact-hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin: 0 auto; }
+
+        /* Interactive SVG Map Section */
+        .map-section { position: relative; width: 100%; max-width: 1200px; margin: 0 auto 6rem; background: rgba(0,0,0,0.2); border: 1px solid var(--border-glass); border-radius: 24px; padding: 4rem 2rem; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        
+        .svg-map-container { position: relative; width: 100%; max-width: 900px; }
+        
+        /* CSS Pulsing Map Pins */
+        .map-pin { position: absolute; width: 12px; height: 12px; background: var(--geo5-green); border-radius: 50%; transform: translate(-50%, -50%); cursor: pointer; z-index: 10; }
+        .map-pin::after { content: ''; position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; transform: translate(-50%, -50%); background: rgba(34, 197, 94, 0.5); border-radius: 50%; animation: pulsePin 2s infinite cubic-bezier(0.16, 1, 0.3, 1); z-index: -1; }
+        
+        /* Specific Pin Locations (Approximate % based on SVG viewBox) */
+        .pin-hq { top: 32%; left: 52%; } /* Europe */
+        .pin-gcc { top: 45%; left: 62%; } /* Middle East */
+        .pin-asia { top: 42%; left: 80%; } /* Asia */
+        .pin-na { top: 35%; left: 22%; } /* North America */
+
+        @keyframes pulsePin {
+            0% { width: 100%; height: 100%; opacity: 1; }
+            100% { width: 300%; height: 300%; opacity: 0; }
+        }
+        
+        .pin-label { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); background: var(--bg-surface); backdrop-filter: blur(8px); border: 1px solid var(--border-glass); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 500; color: var(--text-main); opacity: 0; visibility: hidden; transition: all 0.3s ease; white-space: nowrap; pointer-events: none; }
+        .map-pin:hover .pin-label { opacity: 1; visibility: visible; top: -40px; }
+
+        /* Headquarters vs. Local Partner Toggle Layout */
+        .contact-interface { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+        
+        .contact-tabs { display: flex; border-bottom: 1px solid var(--border-glass); margin-bottom: 3rem; }
+        .ct-btn { background: none; border: none; color: var(--text-muted); font-family: var(--font-heading); font-size: 1.25rem; font-weight: 500; padding: 1rem 2rem; cursor: pointer; position: relative; transition: color 0.3s; flex: 1; text-align: center; }
+        .ct-btn:hover { color: var(--text-main); }
+        .ct-btn.active { color: var(--geo5-green); }
+        .ct-btn.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: var(--geo5-green); }
+
+        .ct-pane { display: none; animation: fadeIn 0.4s ease; }
+        .ct-pane.active { display: block; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* HQ Layout */
+        .hq-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .contact-info-block { margin-bottom: 2rem; }
+        .contact-info-block h3 { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .contact-info-block p { font-size: 1.2rem; font-weight: 500; line-height: 1.6; }
+        .contact-info-block a { color: var(--geo5-green); text-decoration: none; transition: color 0.2s; }
+        .contact-info-block a:hover { color: #16a34a; }
+
+        /* Reseller Interface */
+        .reseller-search { background: var(--bg-surface); border: 1px solid var(--border-glass); padding: 2rem; border-radius: 16px; margin-bottom: 2rem; }
+        .reseller-search label { display: block; color: var(--text-muted); margin-bottom: 1rem; font-weight: 500; }
+        
+        .country-select { width: 100%; max-width: 400px; background: rgba(0,0,0,0.2); border: 1px solid var(--border-glass); color: var(--text-main); font-family: var(--font-ui); padding: 1rem 1.25rem; border-radius: 8px; font-size: 1.1rem; cursor: pointer; outline: none; appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%239ba1a6%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 1rem top 50%; background-size: 0.8rem auto; }
+
+        /* The Partner Card */
+        .partner-card { display: none; background: rgba(34, 197, 94, 0.05); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 16px; padding: 3rem; position: relative; overflow: hidden; }
+        .partner-card.visible { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; animation: fadeIn 0.4s ease; }
+        
+        .partner-badge { display: inline-block; background: var(--geo5-green); color: #000; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem; }
+        .partner-name { font-size: 2rem; font-family: var(--font-heading); margin-bottom: 0.5rem; }
+        .partner-region { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; }
+        
+        .partner-details { display: flex; flex-direction: column; gap: 1rem; }
+        .detail-row { display: flex; align-items: flex-start; gap: 1rem; }
+        .detail-icon { color: var(--geo5-green); font-weight: bold; margin-top: 2px; }
+        
+        /* CSS Logo Placeholder for GSD IDEA */
+        .css-partner-logo { width: 120px; height: 60px; border: 2px solid var(--text-muted); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-weight: bold; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 2rem; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Global Header Placeholder -->
+    <header class="site-header">
+        <div class="logo">FINE<span>2.0</span></div>
+        <nav class="main-nav"><!-- Mega Menu Goes Here --></nav>
+    </header>
+
+    <main class="contact-page">
+        
+        <section class="contact-hero">
+            <h1>We are local, everywhere.</h1>
+            <p>Contact our headquarters directly, or find an authorized reseller in your region for localized engineering support and training.</p>
+        </section>
+
+        <!-- Interactive SVG Map -->
+        <section class="map-section">
+            <div class="svg-map-container">
+                <!-- Highly simplified, stylized SVG World Map Silhouette -->
+                <svg viewBox="0 0 1000 500" fill="rgba(255,255,255,0.05)" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M150,150 Q200,100 300,150 T400,200 T450,100 T500,150 T600,100 T700,200 T800,150 T900,250 T850,350 T750,400 T650,300 T550,400 T450,350 T350,450 T250,350 T150,300 Z" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                    <path d="M500,250 Q550,200 600,250 T650,300 T550,350 T500,250 Z" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                </svg>
+
+                <!-- CSS Pulsing Pins -->
+                <div class="map-pin pin-hq"><div class="pin-label">Global HQ (Prague)</div></div>
+                <div class="map-pin pin-gcc"><div class="pin-label">GCC Region (Dubai)</div></div>
+                <div class="map-pin pin-asia"><div class="pin-label">Asia-Pacific Partner</div></div>
+                <div class="map-pin pin-na"><div class="pin-label">North American Partner</div></div>
+            </div>
+        </section>
+
+        <!-- Dual Interface Section -->
+        <section class="contact-interface">
+            
+            <div class="contact-tabs">
+                <button class="ct-btn active" data-target="tab-hq">Global Headquarters</button>
+                <button class="ct-btn" data-target="tab-reseller">Find a Local Partner</button>
+            </div>
+
+            <!-- Tab 1: Headquarters -->
+            <div class="ct-pane active" id="tab-hq">
+                <div class="hq-layout">
+                    <div>
+                        <div class="contact-info-block">
+                            <h3>Corporate Address</h3>
+                            <p>Fine spol. s r.o.<br>Závěrka 12, 169 00<br>Prague 6, Czech Republic</p>
+                        </div>
+                        <div class="contact-info-block">
+                            <h3>Business Hours</h3>
+                            <p>Monday - Friday<br>8:00 AM - 4:00 PM (CET)</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="contact-info-block">
+                            <h3>Sales & Inquiries</h3>
+                            <p><a href="mailto:sales@finesoftware.eu">sales@finesoftware.eu</a><br>+420 233 089 493</p>
+                        </div>
+                        <div class="contact-info-block">
+                            <h3>Technical Support</h3>
+                            <p><a href="mailto:support@finesoftware.eu">support@finesoftware.eu</a><br>Submit a ticket via our Helpdesk.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Find a Reseller -->
+            <div class="ct-pane" id="tab-reseller">
+                <div class="reseller-search">
+                    <label for="region-select">Select your country to find an authorized dealer:</label>
+                    <select id="region-select" class="country-select">
+                        <option value="" disabled selected>Choose a country...</option>
+                        <option value="uae">United Arab Emirates</option>
+                        <option value="ksa">Saudi Arabia</option>
+                        <option value="qatar">Qatar</option>
+                        <option value="usa">United States</option>
+                        <option value="other">Other Regions</option>
+                    </select>
+                </div>
+
+                <!-- Dynamic Partner Card (Revealed via JS) -->
+                <div class="partner-card" id="partner-gcc">
+                    <div>
+                        <div class="partner-badge">Authorized Premium Partner</div>
+                        <div class="css-partner-logo">GSD IDEA</div>
+                        <h3 class="partner-name">GSD IDEA</h3>
+                        <p class="partner-region">Serving UAE & GCC Region</p>
+                        <p style="color: var(--text-muted); line-height: 1.6;">Providing specialized software solutions for structural and geotechnical engineering, offering direct sales, localized technical support, and comprehensive training programs.</p>
+                    </div>
+                    <div class="partner-details">
+                        <div class="detail-row">
+                            <span class="detail-icon">📍</span>
+                            <span>Concord Tower<br>Dubai Media City<br>Dubai, United Arab Emirates</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-icon">✉️</span>
+                            <a href="mailto:contact@gsdidea.com" style="color: var(--text-main); text-decoration: none;">contact@gsdidea.com</a>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-icon">📞</span>
+                            <span>+971 (0) 4 XXX XXXX</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Shared main.js for global logic -->
+    <script src="main.js"></script>
+
+    <!-- Contact Page Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Tab Switching Logic
+            const tabBtns = document.querySelectorAll('.ct-btn');
+            const tabPanes = document.querySelectorAll('.ct-pane');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active classes
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabPanes.forEach(p => p.classList.remove('active'));
+
+                    // Add active class to target
+                    btn.classList.add('active');
+                    const targetId = btn.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+
+            // 2. Reseller Dropdown Logic
+            const regionSelect = document.getElementById('region-select');
+            const partnerCardGCC = document.getElementById('partner-gcc');
+
+            if (regionSelect && partnerCardGCC) {
+                regionSelect.addEventListener('change', (e) => {
+                    const selected = e.target.value;
+                    
+                    // Show the GCC partner card if UAE, KSA, or Qatar is selected
+                    if (selected === 'uae' || selected === 'ksa' || selected === 'qatar') {
+                        partnerCardGCC.classList.add('visible');
+                    } else {
+                        // For the template, hide it for other regions
+                        partnerCardGCC.classList.remove('visible');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
