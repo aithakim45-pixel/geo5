@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEO5 Geotechnical Software | Fine 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- GEO5 Specific Styles appended for this page -->
+    <style>
+        /* Force 3-column grid for the 6 cards to balance perfectly */
+        .solutions-grid.geo5-grid { grid-template-columns: repeat(3, 1fr); }
+
+        /* Logical Link Diagram CSS */
+        .link-diagram-container { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .data-node { width: 120px; height: 120px; background: rgba(34, 197, 94, 0.1); border: 2px solid var(--geo5-green); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: bold; text-align: center; color: var(--text-main); position: absolute; backdrop-filter: blur(8px); z-index: 2; transition: all 0.5s ease; }
+        
+        .node-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .node-top-left { top: 10%; left: 10%; opacity: 0; }
+        .node-bottom-right { bottom: 10%; right: 10%; opacity: 0; }
+        
+        .data-particle { position: absolute; width: 10px; height: 10px; background: var(--geo5-green); border-radius: 50%; top: 50%; left: 50%; opacity: 0; z-index: 1; box-shadow: 0 0 10px var(--geo5-green); }
+
+        /* Active states triggered by Scroll Observer in main.js */
+        .active-step-2 .node-top-left { opacity: 1; }
+        .active-step-2 .particle-1 { animation: flowTL 2s infinite linear; opacity: 1; }
+        .active-step-3 .node-top-left, .active-step-3 .node-bottom-right { opacity: 1; }
+        .active-step-3 .particle-1 { animation: flowTL 2s infinite linear; opacity: 1; }
+        .active-step-3 .particle-2 { animation: flowBR 2s infinite linear; opacity: 1; }
+
+        @keyframes flowTL { 0% { transform: translate(-50%, -50%); } 100% { transform: translate(-200px, -150px); } }
+        @keyframes flowBR { 0% { transform: translate(-50%, -50%); } 100% { transform: translate(150px, 150px); } }
+
+        /* BIM Banner CSS */
+        .bim-banner { background: linear-gradient(135deg, #0a0b0e 0%, #15181e 100%); border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass); padding: 5rem 2rem; margin: 6rem 0; display: flex; align-items: center; justify-content: space-between; gap: 4rem; overflow: hidden; position: relative; }
+        .bim-content { flex: 1; z-index: 2; }
+        .bim-content h2 { font-size: 2.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+        .bim-badge { background: rgba(255, 255, 255, 0.1); padding: 0.2rem 0.8rem; border-radius: 6px; font-size: 1rem; letter-spacing: 2px; }
+        .bim-content p { color: var(--text-muted); font-size: 1.1rem; max-width: 500px; }
+        
+        /* CSS-Only Vector Graphic for IFC Workflow */
+        .bim-visual { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 2; }
+        .ifc-workflow { display: flex; align-items: center; gap: 2rem; }
+        .ifc-box { width: 100px; height: 120px; border: 2px dashed rgba(255,255,255,0.2); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--bg-surface); color: var(--text-muted); font-weight: bold; }
+        .ifc-box.active { border: 2px solid var(--finec-blue); background: rgba(59, 130, 246, 0.1); color: var(--text-main); }
+        .ifc-arrow { height: 2px; width: 60px; background: var(--border-glass); position: relative; }
+        .ifc-arrow::after { content: ''; position: absolute; right: 0; top: -4px; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 8px solid var(--border-glass); }
+    </style>
+</head>
+<body>
+
+    <!-- Global Header (Include your existing Mega-Menu from index.html here) -->
+    
+    <main class="suite-hub" id="geo5-hub">
+        
+        <!-- Suite Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="suite-badge geo5-badge">GEO5</div>
+                <h1 style="color: var(--text-main);">GEO5 Geotechnical Software</h1>
+                <p>Comprehensive software for all geotechnical engineering tasks. Highly intuitive, logically linked.</p>
+                <div class="hero-actions">
+                    <button class="btn-primary" style="background: var(--geo5-green); color: #fff;">Download Trial</button>
+                    <button class="btn-secondary">View Packages</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <!-- CSS-only 3D Mockup tailored to GEO5 -->
+                <div class="mockup-3d">
+                    <div class="mockup-window">
+                        <div class="mockup-header"><span></span><span></span><span></span></div>
+                        <div class="mockup-body">
+                            <div class="mockup-sidebar"></div>
+                            <div class="mockup-canvas">
+                                <div class="mockup-soil-layer l1"></div>
+                                <div class="mockup-soil-layer l2"></div>
+                                <div class="mockup-wall" style="background: #e2e8f0; width: 30px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solutions Router Grid (Specific to GEO5) -->
+        <section class="solutions-section">
+            <h2 class="section-title">Solutions</h2>
+            <div class="solutions-grid geo5-grid">
+                
+                <div class="glass-card">
+                    <h3 style="color: var(--geo5-green);">Stability Analysis</h3>
+                    <p>Analyze circular and polygonal slip surfaces.</p>
+                    <ul class="program-tags">
+                        <li>Slope Stability</li>
+                        <li>Rock Stability</li>
+                        <li>Nailed Slopes</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--geo5-green);">Excavation Design</h3>
+                    <p>Design and analysis of retaining structures.</p>
+                    <ul class="program-tags">
+                        <li>Sheeting Design</li>
+                        <li>Sheeting Check</li>
+                        <li>Shaft</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--geo5-green);">Walls & Gabions</h3>
+                    <p>Complex verification of retaining wall structures.</p>
+                    <ul class="program-tags">
+                        <li>Cantilever Wall</li>
+                        <li>Gravity Wall</li>
+                        <li>Gabion</li>
+                        <li>Masonry Wall</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--geo5-green);">Shallow Foundations</h3>
+                    <p>Bearing capacity and settlement of footings.</p>
+                    <ul class="program-tags">
+                        <li>Spread Footing</li>
+                        <li>Slab</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--geo5-green);">Deep Foundations</h3>
+                    <p>Bearing capacity and settlement of pile structures.</p>
+                    <ul class="program-tags">
+                        <li>Pile</li>
+                        <li>Pile Group</li>
+                        <li>Micropile</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--geo5-green);">Settlement & Consolidation</h3>
+                    <p>Advanced calculation of terrain settlement.</p>
+                    <ul class="program-tags">
+                        <li>Settlement</li>
+                        <li>Earth Pressures</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- "Logical Link" Visualization (Scrollytelling) -->
+        <section class="scrollytelling-section" id="logical-link-section">
+            <div class="scroll-content-left">
+                <div class="scroll-text-item active" data-step="1">
+                    <h3>1. Centralized Geological Model</h3>
+                    <p>Create a single 3D subsoil model using the Stratigraphy program. Define boreholes, CPTs, and soil layers once. This acts as the single source of truth for your entire project.</p>
+                </div>
+                <div class="scroll-text-item" data-step="2">
+                    <h3>2. 1D Cross-Section Extraction</h3>
+                    <p>Instantly extract a 2D cross-section from the 3D model. The profile, including all soil parameters and water tables, is perfectly transferred to analytical programs without manual input.</p>
+                </div>
+                <div class="scroll-text-item" data-step="3">
+                    <h3>3. Program-to-Program Linking</h3>
+                    <p>Calculate earth pressures in one module and seamlessly transfer the resulting forces to another (e.g., from Sheeting Check directly into Spread Footing). The data flows logically and bidirectionally.</p>
+                </div>
+            </div>
+            
+            <div class="scroll-visuals-right">
+                <!-- Single sticky visual container that updates based on scroll -->
+                <div class="scroll-visual-block" id="link-diagram-host" style="position: sticky; top: 150px;">
+                    <div class="link-diagram-container">
+                        <!-- Step 1: Base Node -->
+                        <div class="data-node node-center">Stratigraphy<br>(3D Model)</div>
+                        
+                        <!-- Step 2: Extracted Node -->
+                        <div class="data-node node-top-left">Slope<br>Stability</div>
+                        <div class="data-particle particle-1"></div>
+                        
+                        <!-- Step 3: Secondary Linked Node -->
+                        <div class="data-node node-bottom-right">Spread<br>Footing</div>
+                        <div class="data-particle particle-2"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BIM Integration Banner -->
+        <section class="bim-banner">
+            <div class="bim-content">
+                <h2>GEO5 & BIM <span class="bim-badge">IFC 4.0</span></h2>
+                <p>Export complete 3D models and calculated structures via the open IFC standard. Seamlessly integrate geotechnical data into global structural models like Revit, Allplan, or Tekla.</p>
+            </div>
+            <div class="bim-visual">
+                <!-- Pure CSS Vector Representation of IFC workflow -->
+                <div class="ifc-workflow">
+                    <div class="ifc-box">GEO5<br>Stratigraphy</div>
+                    <div class="ifc-arrow"></div>
+                    <div class="ifc-box active">.IFC<br>Data File</div>
+                    <div class="ifc-arrow"></div>
+                    <div class="ifc-box">Global<br>BIM Model</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+    <script>
+        // Specific logic to handle the "Logical Link" CSS animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const linkTextItems = document.querySelectorAll('#logical-link-section .scroll-text-item');
+            const linkDiagramHost = document.getElementById('link-diagram-host');
+
+            if (linkTextItems.length > 0 && linkDiagramHost) {
+                const scrollyObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const step = entry.target.getAttribute('data-step');
+                            
+                            // Reset classes on the diagram host
+                            linkDiagramHost.className = 'scroll-visual-block';
+                            
+                            // Apply animation class based on active text node
+                            linkDiagramHost.classList.add(`active-step-${step}`);
+                        }
+                    });
+                }, { root: null, rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+
+                linkTextItems.forEach(item => scrollyObserver.observe(item));
+            }
+        });
+    </script>
+</body>
+</html>
