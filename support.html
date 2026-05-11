@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support & E-Learning | Fine 2.0 Software</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Support Specific Styles -->
+    <style>
+        .support-page { padding-top: 140px; max-width: 1400px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; padding-bottom: 8rem; }
+        
+        /* Search-Driven Hero */
+        .support-hero { text-align: center; margin-bottom: 5rem; display: flex; flex-direction: column; align-items: center; }
+        .support-hero h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1px; }
+        .support-hero p { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 3rem; }
+        
+        .search-container { position: relative; width: 100%; max-width: 800px; }
+        .search-bar { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-glass); padding: 1.5rem 2rem 1.5rem 4rem; border-radius: 50px; font-size: 1.25rem; color: var(--text-main); font-family: var(--font-ui); backdrop-filter: blur(16px); transition: all 0.3s ease; outline: none; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .search-bar:focus { border-color: rgba(255,255,255,0.3); background: rgba(255, 255, 255, 0.08); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
+        .search-bar::placeholder { color: var(--text-muted); font-weight: 300; }
+        
+        /* CSS Search Icon */
+        .search-icon { position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border: 2px solid var(--text-muted); border-radius: 50%; }
+        .search-icon::after { content: ''; position: absolute; bottom: -5px; right: -5px; width: 8px; height: 2px; background: var(--text-muted); transform: rotate(45deg); }
+
+        /* Quick Navigation Grid */
+        .quick-nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-bottom: 8rem; }
+        .nav-card { background: var(--bg-surface); border: 1px solid var(--border-glass); border-radius: 16px; padding: 2.5rem 2rem; display: flex; flex-direction: column; align-items: center; text-align: center; transition: transform 0.3s, border-color 0.3s; cursor: pointer; text-decoration: none; }
+        .nav-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
+        .nav-card h3 { font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--text-main); }
+        .nav-card p { font-size: 0.95rem; color: var(--text-muted); }
+        
+        /* CSS-Only Icons Container */
+        .icon-box { width: 64px; height: 64px; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); display: flex; justify-content: center; align-items: center; position: relative; margin-bottom: 1rem; }
+        
+        /* 1. Key/Lock Icon */
+        .icon-lock { width: 20px; height: 16px; border: 2px solid var(--geo5-green); border-radius: 4px; position: relative; margin-top: 10px; }
+        .icon-lock::before { content: ''; position: absolute; top: -12px; left: 2px; width: 12px; height: 12px; border: 2px solid var(--geo5-green); border-bottom: none; border-radius: 10px 10px 0 0; }
+        
+        /* 2. Book Icon */
+        .icon-book { width: 28px; height: 20px; border: 2px solid var(--finec-blue); border-radius: 2px; position: relative; }
+        .icon-book::after { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 2px; height: 20px; background: var(--finec-blue); }
+        
+        /* 3. Play Icon */
+        .icon-play { width: 0; height: 0; border-left: 16px solid var(--truss4-amber); border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 4px; }
+        
+        /* 4. Headset Icon */
+        .icon-headset { width: 24px; height: 24px; border: 2px solid #fff; border-bottom: none; border-radius: 12px 12px 0 0; position: relative; }
+        .icon-headset::before { content: ''; position: absolute; bottom: -8px; left: -4px; width: 6px; height: 12px; background: #fff; border-radius: 4px; }
+        .icon-headset::after { content: ''; position: absolute; bottom: -8px; right: -4px; width: 6px; height: 12px; background: #fff; border-radius: 4px; }
+
+        /* Video Carousel Section */
+        .video-section { margin-bottom: 8rem; position: relative; }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; }
+        .section-header h2 { font-size: 2.5rem; }
+        .carousel-controls { display: flex; gap: 1rem; }
+        .control-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border-glass); color: var(--text-main); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; }
+        .control-btn:hover { background: rgba(255,255,255,0.1); }
+        
+        .carousel-track { display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding-bottom: 2rem; -ms-overflow-style: none; scrollbar-width: none; }
+        .carousel-track::-webkit-scrollbar { display: none; }
+        
+        .video-card { min-width: 380px; scroll-snap-align: start; background: var(--bg-surface); border: 1px solid var(--border-glass); border-radius: 16px; overflow: hidden; transition: transform 0.3s; cursor: pointer; }
+        .video-card:hover { transform: translateY(-5px); }
+        
+        /* CSS Video Thumbnail Placeholder */
+        .video-thumbnail { width: 100%; height: 210px; position: relative; display: flex; align-items: center; justify-content: center; }
+        .thumb-geo { background: linear-gradient(135deg, #1e293b, #0f172a); }
+        .thumb-geo::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(34, 197, 94, 0.15) 1px, transparent 1px); background-size: 15px 15px; }
+        
+        /* Overlay Play Button */
+        .play-overlay { width: 60px; height: 60px; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2; transition: transform 0.3s; }
+        .video-card:hover .play-overlay { transform: scale(1.1); background: var(--geo5-green); border-color: var(--geo5-green); }
+        .play-overlay-icon { width: 0; height: 0; border-left: 14px solid #fff; border-top: 8px solid transparent; border-bottom: 8px solid transparent; margin-left: 4px; }
+        
+        .video-info { padding: 1.5rem; }
+        .video-tag { display: inline-block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--geo5-green); margin-bottom: 0.5rem; font-weight: 600; }
+        .video-title { font-size: 1.15rem; font-family: var(--font-heading); margin-bottom: 0.5rem; line-height: 1.4; color: var(--text-main); }
+        .video-duration { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Minimal FAQ Accordion */
+        .faq-section { max-width: 900px; margin: 0 auto; }
+        .faq-section h2 { font-size: 2.5rem; margin-bottom: 3rem; text-align: center; }
+        
+        .faq-item { border-bottom: 1px solid var(--border-glass); }
+        .faq-item:first-of-type { border-top: 1px solid var(--border-glass); }
+        .faq-item summary { padding: 2rem 0; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 500; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--text-main); transition: color 0.3s; }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary:hover { color: var(--geo5-green); }
+        
+        /* Animated Plus/Minus Symbol */
+        .faq-icon { position: relative; width: 20px; height: 20px; }
+        .faq-icon::before, .faq-icon::after { content: ''; position: absolute; background: currentColor; transition: transform 0.3s ease; }
+        .faq-icon::before { top: 9px; left: 0; width: 20px; height: 2px; }
+        .faq-icon::after { top: 0; left: 9px; width: 2px; height: 20px; }
+        .faq-item[open] .faq-icon::after { transform: rotate(90deg); }
+        
+        .faq-content { padding-bottom: 2rem; color: var(--text-muted); font-size: 1.1rem; line-height: 1.7; animation: slideDown 0.3s ease-out; }
+        
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+    </style>
+</head>
+<body>
+
+    <!-- Global Header Placeholder -->
+    <header class="site-header">
+        <div class="logo">FINE<span>2.0</span></div>
+        <nav class="main-nav"><!-- Mega Menu Goes Here --></nav>
+    </header>
+
+    <main class="support-page">
+        
+        <!-- Search Hero -->
+        <section class="support-hero">
+            <h1>How can we help you?</h1>
+            <p>Find engineering manuals, video tutorials, installation guides, and software updates.</p>
+            <div class="search-container">
+                <div class="search-icon"></div>
+                <input type="text" class="search-bar" placeholder="Search for 'Gabion Wall' or 'Error 404'...">
+            </div>
+        </section>
+
+        <!-- Quick Navigation Grid -->
+        <section class="quick-nav-grid">
+            <a href="#" class="nav-card">
+                <div class="icon-box"><div class="icon-lock"></div></div>
+                <h3>Installation & Licensing</h3>
+                <p>Network keys, local locks, and software activation.</p>
+            </a>
+            <a href="#" class="nav-card">
+                <div class="icon-box"><div class="icon-book"></div></div>
+                <h3>Engineering Manuals</h3>
+                <p>In-depth mathematical theory and software operation.</p>
+            </a>
+            <a href="#" class="nav-card">
+                <div class="icon-box"><div class="icon-play"></div></div>
+                <h3>Video Tutorials</h3>
+                <p>Step-by-step visual guides for all 30+ programs.</p>
+            </a>
+            <a href="#" class="nav-card">
+                <div class="icon-box"><div class="icon-headset"></div></div>
+                <h3>Submit a Ticket</h3>
+                <p>Direct access to our geotechnical support engineers.</p>
+            </a>
+        </section>
+
+        <!-- Video Tutorials Carousel -->
+        <section class="video-section">
+            <div class="section-header">
+                <h2>Latest Video Tutorials</h2>
+                <div class="carousel-controls">
+                    <button class="control-btn" id="btn-left">←</button>
+                    <button class="control-btn" id="btn-right">→</button>
+                </div>
+            </div>
+            
+            <div class="carousel-track" id="video-track">
+                
+                <!-- Video 1 -->
+                <div class="video-card">
+                    <div class="video-thumbnail thumb-geo">
+                        <div class="play-overlay"><div class="play-overlay-icon"></div></div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-tag">GEO5 Tutorial</span>
+                        <h3 class="video-title">How to model a Gabion Wall in 5 minutes</h3>
+                        <div class="video-duration">5:24 • Beginner</div>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="video-card">
+                    <div class="video-thumbnail thumb-geo">
+                        <div class="play-overlay"><div class="play-overlay-icon"></div></div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-tag">Stratigraphy</span>
+                        <h3 class="video-title">Importing CPT Data into 3D Subsoil Models</h3>
+                        <div class="video-duration">12:15 • Advanced</div>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="video-card">
+                    <div class="video-thumbnail thumb-geo">
+                        <div class="play-overlay"><div class="play-overlay-icon"></div></div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-tag">FIN EC Tutorial</span>
+                        <h3 class="video-title">Designing Concrete Retaining Structures</h3>
+                        <div class="video-duration">8:40 • Intermediate</div>
+                    </div>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="video-card">
+                    <div class="video-thumbnail thumb-geo">
+                        <div class="play-overlay"><div class="play-overlay-icon"></div></div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-tag">GEO5 Tutorial</span>
+                        <h3 class="video-title">Slope Stability: Circular vs. Polygonal Slips</h3>
+                        <div class="video-duration">15:30 • Advanced</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Minimal FAQ Accordion -->
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <details class="faq-item" name="faq">
+                <summary>How do I transfer my license to a new computer? <span class="faq-icon"></span></summary>
+                <div class="faq-content">
+                    If you are using a Software Key, you must deactivate the key on your old computer using the Fine License Manager before activating it on the new machine. If you are using a physical USB hardware key, simply plug the USB drive into the new computer and install the latest drivers.
+                </div>
+            </details>
+
+            <details class="faq-item" name="faq">
+                <summary>Can I open newer files in an older version of the software? <span class="faq-icon"></span></summary>
+                <div class="faq-content">
+                    No, files created in newer editions (e.g., Edition 2026) cannot be opened in older editions (e.g., Edition 2025) due to structural changes in how mathematical models are saved. However, newer editions can always open files created in any older version.
+                </div>
+            </details>
+
+            <details class="faq-item" name="faq">
+                <summary>How frequently are engineering standards updated? <span class="faq-icon"></span></summary>
+                <div class="faq-content">
+                    We release a major Edition upgrade once a year (typically in November) and a Spring Update in May. Both updates include the latest implementations of Eurocodes, AASHTO, and regional annexes. Active Fine Maintenance subscribers receive these updates automatically.
+                </div>
+            </details>
+
+            <details class="faq-item" name="faq">
+                <summary>What is included in the Demo version? <span class="faq-icon"></span></summary>
+                <div class="faq-content">
+                    The Demo version includes all features of the full software without time limitations. However, saving data files is disabled, printing calculation reports is watermarked, and exporting data (DXF, IFC) is restricted. It is strictly designed for evaluation purposes.
+                </div>
+            </details>
+        </section>
+
+    </main>
+
+    <!-- Shared main.js for global logic -->
+    <script src="main.js"></script>
+
+    <!-- Carousel Scroll Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.getElementById('video-track');
+            const btnLeft = document.getElementById('btn-left');
+            const btnRight = document.getElementById('btn-right');
+
+            // Scroll amount equals one card width plus the gap (approx 400px)
+            const scrollAmount = 400;
+
+            if (btnRight && btnLeft && track) {
+                btnRight.addEventListener('click', () => {
+                    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                });
+
+                btnLeft.addEventListener('click', () => {
+                    track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
